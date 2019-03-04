@@ -43,7 +43,6 @@ logger.addHandler(ch)
 
 # my functions ==============================================================
 
-
 def drawLineToImage(img_display, p0, p1, color=None, line_width=2):
     if color is None:
         color=[0,0,255] # red
@@ -51,6 +50,8 @@ def drawLineToImage(img_display, p0, p1, color=None, line_width=2):
         p0=(p0[0],p0[1])
     if type(p1)==list:
         p1=(p1[0],p1[1])
+    p0=(int(p0[0]), int(p0[1]))
+    p1=(int(p1[0]), int(p1[1]))
     cv2.line(img_display,p0,p1,color,line_width)
 
 def drawBoxToImage(img_display, p0, p1, color=None, line_width=2):
@@ -78,27 +79,75 @@ def drawActionResult(img_display, skeleton, action_result):
     miny = 999
     maxx = -999
     maxy = -999
-    for i in range(18):
-        minx = np.min(minx, skeleton[i])
-        maxx = np.min(maxx, skeleton[i])
-        miny = np.min(miny, skeleton[i+1])
-        maxy = np.min(maxy, skeleton[i+1])
-    
+    i = 0
+    NaN = -1
+
+    while i < len(skeleton):
+        if not(skeleton[i]==NaN or skeleton[i+1]==NaN):
+            minx = min(minx, skeleton[i])
+            maxx = max(maxx, skeleton[i])
+            miny = min(miny, skeleton[i+1])
+            maxy = max(maxy, skeleton[i+1])
+        i+=2
+
     minx = minx * img_display.shape[1]
     miny = miny * img_display.shape[0]
     maxx = maxx * img_display.shape[1]
     maxy = maxy * img_display.shape[0]
+    print(minx, miny, maxx, maxy)
     
     # Draw bounding box
     drawBoxToImage(img_display, [minx, miny], [maxx, maxy])
 
     # Draw text at left corner
-    # TEST_ROW = miny 
-    # TEST_COL = minx
     TEST_ROW = 300 
     TEST_COL = 300
     img_display = cv2.putText(
         img_display, action_result, (TEST_COL, TEST_ROW), font, 0.7, (0, 0, 255), 2, cv2.LINE_AA)
+
+
+def pos2angles(sk):
+  
+    def get(i):
+        return sk[i*2:i*2+2]
+    
+    def calc_a(p1,p2,p3):
+        dp1 = p1-p2
+        dp2 = p3-p2
+        val = np.linalg.norm(dp1) * np.linalg.norm(dp2)
+        if val==0:
+            return 0
+        res = dp1.dot(dp2)/val
+        return res
+
+    p_neck = get(1)
+
+    p_r_shoulder =  get(2)
+    p_r_elbow =  get(3)
+    p_r_wrist =  get(4)
+    a_r_shoulder = calc_a(p_neck, p_r_shoulder, p_r_elbow)
+    a_r_elbow = calc_a(p_r_shoulder, p_r_elbow, p_r_wrist)
+
+    p_l_shoulder =  get(5)
+    p_l_elbow =  get(6)
+    p_l_wrist =  get(7)
+    a_l_shoulder = calc_a(p_neck, p_l_shoulder, p_l_elbow)
+    a_l_elbow = calc_a(p_l_shoulder, p_l_elbow, p_l_wrist)
+
+    p_r_hip = get(8)
+    p_r_knee = get(9)
+    p_r_ankle = get(10)
+    a_r_hip = calc_a(p_neck, p_r_hip, p_r_knee)
+    a_r_knee = calc_a(p_r_hip, p_r_knee, p_r_ankle)
+
+    p_l_hip = get(11)
+    p_l_knee = get(12)
+    p_l_ankle = get(13)
+    a_l_hip = calc_a(p_neck, p_l_hip, p_l_knee) 
+    a_l_knee = calc_a(p_l_hip, p_l_knee, p_l_ankle)
+
+    angles = [a_r_shoulder, a_r_elbow, a_l_shoulder, a_l_elbow, a_r_hip, a_r_knee, a_l_hip, a_l_knee]
+    return np.array(angles)
 
 # FUNCTIONS ==============================================================
 
@@ -228,51 +277,53 @@ class DetectSkeleton(object):
 # ==============================================================
 
 if __name__ == "__main__":
-
-    loader = myio.ImageLoader(myio.load_images_info(CURR_PATH), DATA_FOLDER)
-    
+    cam = cv2.VideoCapture(0)
     detector = DetectSkeleton()
-    action_recognition_model = load_model(CURR_PATH + "Skeleton-Based-Human-Action-Recognition/" + "action_recognition.h5")
-        
-
     window_name = "action_recognition"
-    for i in range(150, loader.num_images+1):
+    action_recognition_model = load_model(CURR_PATH + "Skeleton-Based-Human-Action-Recognition/" + "action_recognition.h5")
+    i = 0
+    while True:
+        ret_val, img = cam.read()
+        i += 1
+        
+        img =cv2.flip(img, 1)
 
-        img = loader.imread(i)
-        filename = loader.get_filename(i)
-        action_type = loader.get_action_type(i)
         print("\n\n========================================")
-        print("\nProcessing {}, {}: {}\n".format(i, action_type, filename))
-
-        if 0:
-            cv2.imshow(window_name, img)
-            cv2.waitKey()
+        print("\nProcessing {}th image\n".format(i))
 
         # Detect
         humans = detector.detect(img)
 
         # Write skeleton data to file
-        skeletons = DetectSkeleton.humans2skeletons(humans, action_type)
-        # myio.save_skeletons("skeletons/"+int2str(i, 5)+".txt", skeletons)
+        skeletons = DetectSkeleton.humans2skeletons(humans, "None")
 
-        
         # Draw and write display image to file
         image_disp = detector.draw(img, humans)
         cv2.imwrite("skeletons_images/"+int2str(i, 5)+".png", image_disp)
       
 
         # 识别
-        skeleton = np.array(skeletons[0][1:1+18*2]).reshape(-1, 36)
- 
-        predict_number = np.argmax(action_recognition_model.predict(skeleton))
-        action_dict = {
-            1: "stand", 2: "walk", 3:"wave", 0:"squat"
-        }
-        action_result = action_dict[predict_number]
+        if len(skeletons)>0:
+            skeleton = np.array(skeletons[0][1:1+18*2])
 
-        print("\n\n ================================\n\n")
-        print("action_result is :", action_result, "\n\n")
-        drawActionResult(image_disp, skeleton,   action_result)
+            def remove_mean(skeleton0):
+                skeleton = skeleton0.copy()
+                for i in range(1, 18):
+                    skeleton[i*2] -= skeleton[0]
+                    skeleton[i*2+1] -= skeleton[1]
+                return skeleton
+
+            skeleton_input = pos2angles(skeleton).reshape(-1, 8)
+            predict_number = np.argmax(action_recognition_model.predict(skeleton_input))
+
+            action_dict = {
+                1: "stand", 2: "walk", 3:"wave", 0:"squat"
+            }
+            action_result = action_dict[predict_number]
+
+            print("\n\n ================================\n\n")
+            print("action_result is :", action_result, "\n\n")
+            drawActionResult(image_disp, skeleton,   action_result)
 
         # Display
         cv2.imshow(window_name, image_disp)
