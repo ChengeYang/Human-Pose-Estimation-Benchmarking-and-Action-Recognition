@@ -1,5 +1,6 @@
 import pandas as pd
 import numpy as np
+import data_preprocessing as dpp
 
 from sklearn.preprocessing import LabelEncoder
 from sklearn.model_selection import train_test_split
@@ -10,15 +11,8 @@ from keras.models import load_model
 from keras.models import Sequential
 from keras.layers import Dense
 from keras.layers.normalization import BatchNormalization
-from keras.optimizers import Adam
-
-
-def head_reference(X):
-    for i in range(len(X)):
-        for j in range(1, int(len(X[i])/2)):
-            X[i, j*2] = X[i, j*2] - X[i, 0]
-            X[i, j*2+1] = X[i, j*2+1] - X[i, 1]
-    return X
+from keras.optimizers import Adam, SGD
+from keras.layers import LeakyReLU
 
 
 if __name__ == "__main__":
@@ -29,7 +23,13 @@ if __name__ == "__main__":
     dataset = raw_data.values
     X = dataset[:, 0:36].astype(float)
     Y = dataset[:, 36]
-    X = head_reference(X)
+
+    # Data pre-processing
+    # X = dpp.head_reference(X)
+    X_pp = []
+    for i in range(len(X)):
+        X_pp.append(dpp.pos2angles(X[i]))
+    X_pp = np.array(X_pp)
 
     # Encoder the class label to number
     # Converts a class vector (integers) to binary class matrix
@@ -43,7 +43,7 @@ if __name__ == "__main__":
 
     # Split into training and testing data
     # random_state:
-    X_train, X_test, Y_train, Y_test = train_test_split(X, matrix_Y, test_size=0.1, random_state=42)
+    X_train, X_test, Y_train, Y_test = train_test_split(X_pp, matrix_Y, test_size=0.1, random_state=42)
 
     # Build DNN model with keras
     model = Sequential()
@@ -63,7 +63,7 @@ if __name__ == "__main__":
     # batch_size: number of samples per gradient update
     # epochs: how many times to pass through the whole training set
     # verbose: show one line for every completed epoch
-    model.fit(X_train, Y_train, batch_size=32, epochs=10, verbose=2, validation_data=(X_test, Y_test))
+    model.fit(X_train, Y_train, batch_size=32, epochs=50, verbose=2, validation_data=(X_test, Y_test))
 
     # Save the trained model
     model.save('action_recognition.h5')
