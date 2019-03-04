@@ -13,6 +13,14 @@ from keras.layers.normalization import BatchNormalization
 from keras.optimizers import Adam
 
 
+def head_reference(X):
+    for i in range(len(X)):
+        for j in range(1, int(len(X[i])/2)):
+            X[i, j*2] = X[i, j*2] - X[i, 0]
+            X[i, j*2+1] = X[i, j*2+1] - X[i, 1]
+    return X
+
+
 if __name__ == "__main__":
     # Loading training data
     # Four class: stand, walk, squat, wave, 900 training frames each class
@@ -21,6 +29,7 @@ if __name__ == "__main__":
     dataset = raw_data.values
     X = dataset[:, 0:36].astype(float)
     Y = dataset[:, 36]
+    X = head_reference(X)
 
     # Encoder the class label to number
     # Converts a class vector (integers) to binary class matrix
@@ -58,14 +67,3 @@ if __name__ == "__main__":
 
     # Save the trained model
     model.save('action_recognition.h5')
-
-    # Prediction
-    # model = load_model('action_recognition.h5')
-    num = 2200;
-    test_x = np.array(X[num]).reshape(-1, 36)
-    test_y = Y[num]
-    if test_x.size > 0:
-        pred_num = np.argmax(model.predict(test_x))
-        pred_class = encoder.inverse_transform([pred_num])
-        print("Ground truth class: ", test_y)
-        print("Predicted class:", pred_class)
