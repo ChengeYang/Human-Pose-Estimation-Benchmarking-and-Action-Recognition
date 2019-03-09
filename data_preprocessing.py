@@ -96,6 +96,8 @@ def pose_normalization(x):
                 non_zero_x.append(lx[i])
             if ly[i] != 0:
                 non_zero_y.append(ly[i])
+        if len(non_zero_x) == 0 or len(non_zero_y) == 0:
+            return np.array([0] * N)
 
         # Normalization x/y data according to the bounding box
         origin_x = np.min(non_zero_x)
