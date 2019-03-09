@@ -28,7 +28,7 @@ if __name__ == "__main__":
     # X = dpp.head_reference(X)
     X_pp = []
     for i in range(len(X)):
-        X_pp.append(dpp.pos2angles(X[i]))
+        X_pp.append(dpp.pose_normalization(X[i]))
     X_pp = np.array(X_pp)
 
     # Encoder the class label to number
