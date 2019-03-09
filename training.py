@@ -19,7 +19,7 @@ if __name__ == "__main__":
     # Loading training data
     # Four class: stand, walk, squat, wave, 900 training frames each class
     # X: input, Y: output
-    raw_data = pd.read_csv("data.csv", header=0)
+    raw_data = pd.read_csv("skeleton_feiyu.csv", header=0)
     dataset = raw_data.values
     X = dataset[:, 0:36].astype(float)
     Y = dataset[:, 36]
@@ -53,7 +53,7 @@ if __name__ == "__main__":
     model.add(BatchNormalization())
     model.add(Dense(units=16, activation='relu'))
     model.add(BatchNormalization())
-    model.add(Dense(units=4, activation='softmax'))
+    model.add(Dense(units=5, activation='softmax'))
 
     # Training
     # optimiser: Adam with learning rate 0.0001
