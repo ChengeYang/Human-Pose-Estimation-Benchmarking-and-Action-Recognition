@@ -1,7 +1,31 @@
-## Install dependencies
-* Python version: Python 3.6.7
-* pip3 install pandas
-* pip3 install -U scikit-learn
-* pip3 install --user --upgrade tensorflow
-* sudo -H pip3 install keras
-* Got numpy error. Solved by **pip3 uninstall numpy**. Then run **pip3 show numpy**, find that numpy is still installed.
+# Human Pose Estimation and Action Recognition
+#### Deep Learning Project, Winter 2019, Northwestern University
+#### Group members: Chenge Yang, Zhicheng Yu, Feiyu Chen
+-----------------------------------------------------------------------------------------
+## Introduction
+This project contain two main parts:
+### 1. Human Pose Estimation Benchmarking
+
+### 2. Online Skeleton-Based Action Recognition
+Single-frame realtime human action recognition based on OpenPose. The pipeline is as follows:
+* Realtime human pose estimation via OpenPose
+* Data preprocessing
+* Action recognition with DNN using TensorFlow / Keras
+-----------------------------------------------------------------------------------------
+## Dependencies
+* Python (my version: 3.6.7)
+* pandas & numpy
+* scikit-learn
+* tensorflow
+* keras
+-----------------------------------------------------------------------------------------
+## Implementation
+### Data preprocessing
+
+### DNN model
+
+-----------------------------------------------------------------------------------------
+## Acknowledgement
+* [OpenPose](https://github.com/CMU-Perceptual-Computing-Lab/openpose)
+* [AlphaPose](https://github.com/MVIG-SJTU/AlphaPose)
+* [Online-Realtime-Action-Recognition-based-on-OpenPose](https://github.com/LZQthePlane/Online-Realtime-Action-Recognition-based-on-OpenPose)
