@@ -1,3 +1,4 @@
+import argparse
 import pandas as pd
 import numpy as np
 import data_preprocessing as dpp
@@ -16,10 +17,18 @@ from keras.layers import LeakyReLU
 
 
 if __name__ == "__main__":
+    # Read dataset from command line
+    key_word = "--dataset"
+    parser = argparse.ArgumentParser()
+    parser.add_argument(key_word, required=False, default='../data/skeleton_raw.csv')
+    input = parser.parse_args().dataset
+
     # Loading training data
-    # Four class: stand, walk, squat, wave, 900 training frames each class
+    try:
+        raw_data = pd.read_csv(input, header=0)
+    except:
+        print("Dataset not exists.")
     # X: input, Y: output
-    raw_data = pd.read_csv("data.csv", header=0)
     dataset = raw_data.values
     X = dataset[:, 0:36].astype(float)
     Y = dataset[:, 36]
@@ -28,7 +37,7 @@ if __name__ == "__main__":
     # X = dpp.head_reference(X)
     X_pp = []
     for i in range(len(X)):
-        X_pp.append(dpp.pos2angles(X[i]))
+        X_pp.append(dpp.pose_normalization(X[i]))
     X_pp = np.array(X_pp)
 
     # Encoder the class label to number
@@ -37,9 +46,10 @@ if __name__ == "__main__":
     encoder_Y = encoder.fit_transform(Y)
     matrix_Y = np_utils.to_categorical(encoder_Y)
     print(Y[0], ": ", encoder_Y[0])
-    print(Y[900], ": ", encoder_Y[900])
-    print(Y[1800], ": ", encoder_Y[1800])
-    print(Y[2700], ": ", encoder_Y[2700])
+    print(Y[650], ": ", encoder_Y[650])
+    print(Y[1300], ": ", encoder_Y[1300])
+    print(Y[1950], ": ", encoder_Y[1950])
+    print(Y[2600], ": ", encoder_Y[2600])
 
     # Split into training and testing data
     # random_state:
@@ -53,7 +63,7 @@ if __name__ == "__main__":
     model.add(BatchNormalization())
     model.add(Dense(units=16, activation='relu'))
     model.add(BatchNormalization())
-    model.add(Dense(units=4, activation='softmax'))
+    model.add(Dense(units=5, activation='softmax'))
 
     # Training
     # optimiser: Adam with learning rate 0.0001
@@ -66,4 +76,4 @@ if __name__ == "__main__":
     model.fit(X_train, Y_train, batch_size=32, epochs=50, verbose=2, validation_data=(X_test, Y_test))
 
     # Save the trained model
-    model.save('action_recognition.h5')
+    model.save('../model/action_recognition.h5')
