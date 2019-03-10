@@ -6,15 +6,15 @@
 we collected 3916 training images from our laptop's camera for training the model and classifying the 5 actions (squat, stand, punch, kick, and wave). In each training image, there is only one person doing one of these 5 actions, as shown in the videos below:  
 
 
-|squat |stand |punch |kick |wave |
-|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
-|![](./doc/squat.gif)|  ![](./doc/stand.gif)|  ![](./doc/punch.gif)|  ![](./doc/kick.gif)|  ![](./doc/wave.gif)|
+squat |stand |punch |kick |wave 
+:---------:|:---------:|:---------:|:---------:|:---------:|:---------:|:---------:|:---------:
+![](./doc/squat.gif)|  ![](./doc/stand.gif)|  ![](./doc/punch.gif)|  ![](./doc/kick.gif)|  ![](./doc/wave.gif)
 
 The videos were recorded at 10 fps with a framesize of 480x640, and then saved to images.
 
 Number of training images of each action:
 |Label | squat |stand |punch |kick |wave | Total
-|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
+|:---------:|:---------:|:---------:|:---------:|:---------:|:---------:|:---------:|:---------:|:---------:|
 |Number|  711|  907|  583|  784|  931| 3916|
 
 ## Get Skeleton from Image
