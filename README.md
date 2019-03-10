@@ -15,9 +15,6 @@
 
 # AlphaPose
 ## Introduction
-<p align="center">
-    <img src="doc//alphapose/pose.gif", width="360">
-</p>
 
  [AlphaPose](https://github.com/MVIG-SJTU/AlphaPose) is an accurate multi-person pose estimator, which is the first real-time open-source system that achieves 70+ mAP (72.3 mAP) on COCO dataset and 80+ mAP (82.1 mAP) on MPII dataset. To match poses that correspond to the same person across frames, AlphaPose also provides an efficient online pose tracker called Pose Flow. It is the first open-source online pose tracker that achieves both 60+ mAP (66.5 mAP) and 50+ MOTA (58.3 MOTA) on PoseTrack Challenge dataset.
 
@@ -34,9 +31,6 @@ to install the dependencies it needs. However, you may run into some issues that
 
 # Openpose
 ## Introduction
-<p align="center">
-    <img src="doc//openpose/dance_foot.gif", width="360">
-</p>
 
  OpenPose represents the first real-time multi-person system to jointly detect human body, hand, facial, and foot keypoints (in total 135 keypoints) on single images. It is an on-going open source project of CMU-Perceptual-Computing-lab. It also supports C++ and Python API for customized implement.
 
