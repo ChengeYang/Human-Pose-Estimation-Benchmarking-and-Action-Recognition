@@ -68,6 +68,7 @@ The examples and the numbers of training images for each action class are shown 
 |:---:|:---:|:---:|:---:|:---:|:---:|:---:|
 |Number of training images|  711|  907|  583|  784|  931| 3916|
 </center>
+
 ### Get Skeleton from Image
 We used [tf-pose-estimation](https://github.com/ildoonet/tf-pose-estimation) to detect the human pose in each training image.
 
