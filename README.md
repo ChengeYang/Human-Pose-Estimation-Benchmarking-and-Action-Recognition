@@ -6,6 +6,7 @@
 <p align = "center">
   <img src = "action_recognition.gif" height = "480px">
 </p>
+
 -----------------------------------------------------------------------------------------
 ## Introduction
 This project contain two main parts:
