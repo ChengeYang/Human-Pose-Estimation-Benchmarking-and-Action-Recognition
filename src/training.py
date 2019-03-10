@@ -1,7 +1,7 @@
 import argparse
 import pandas as pd
 import numpy as np
-import data_preprocessing as dpp
+import mylib.data_preprocessing as dpp
 
 from sklearn.preprocessing import LabelEncoder
 from sklearn.model_selection import train_test_split
@@ -76,4 +76,4 @@ if __name__ == "__main__":
     model.fit(X_train, Y_train, batch_size=32, epochs=50, verbose=2, validation_data=(X_test, Y_test))
 
     # Save the trained model
-    model.save('../model/action_recognition.h5')
+    model.save('../model/test.h5')
