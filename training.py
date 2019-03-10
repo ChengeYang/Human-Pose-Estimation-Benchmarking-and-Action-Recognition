@@ -1,3 +1,4 @@
+import argparse
 import pandas as pd
 import numpy as np
 import data_preprocessing as dpp
@@ -16,10 +17,18 @@ from keras.layers import LeakyReLU
 
 
 if __name__ == "__main__":
+    # Read dataset from command line
+    key_word = "--dataset"
+    parser = argparse.ArgumentParser()
+    parser.add_argument(key_word, required=False, default='skeleton_raw.csv')
+    input = parser.parse_args().dataset
+
     # Loading training data
-    # Four class: stand, walk, squat, wave, 900 training frames each class
+    try:
+        raw_data = pd.read_csv(input, header=0)
+    except:
+        print("Dataset not exists.")
     # X: input, Y: output
-    raw_data = pd.read_csv("skeleton_feiyu_raw.csv", header=0)
     dataset = raw_data.values
     X = dataset[:, 0:36].astype(float)
     Y = dataset[:, 36]
