@@ -256,7 +256,7 @@ if __name__ == "__main__":
     if DO_INFERENCE:
         if DO_INFERENCE_MODEL == "EECS_496":
             classifier = ActionClassifier(
-                CURR_PATH + "githubs/Skeleton-Based-Human-Action-Recognition/action_recognition.h5"
+                CURR_PATH + "../model/action_recognition.h5"
             )
         else:
             classifier = MyClassifier(
