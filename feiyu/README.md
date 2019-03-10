@@ -7,15 +7,16 @@ we collected 3916 training images from our laptop's camera for training the mode
 
 
 squat |stand |punch |kick |wave 
-:---------:|:---------:|:---------:|:---------:|:---------:|:---------:|:---------:|:---------:
+:---------:|:---------:|:---------:|:---------:|:---------:
 ![](./doc/squat.gif)|  ![](./doc/stand.gif)|  ![](./doc/punch.gif)|  ![](./doc/kick.gif)|  ![](./doc/wave.gif)
 
 The videos were recorded at 10 fps with a framesize of 480x640, and then saved to images.
 
 Number of training images of each action:
-|Label | squat |stand |punch |kick |wave | Total
-|:---------:|:---------:|:---------:|:---------:|:---------:|:---------:|:---------:|:---------:|:---------:|
-|Number|  711|  907|  583|  784|  931| 3916|
+
+Label | squat |stand |punch |kick |wave | Total
+:---------:|:---------:|:---------:|:---------:|:---------:|:---------:|:---------:|:---------:|:---------:
+Number|  711|  907|  583|  784|  931| 3916
 
 ## Get Skeleton from Image
 
