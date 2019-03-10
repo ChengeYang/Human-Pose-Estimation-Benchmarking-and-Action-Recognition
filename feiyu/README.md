@@ -15,7 +15,7 @@ The videos were recorded at 10 fps with a framesize of 480x640, and then saved t
 Number of training images of each action:
 
 Label | squat |stand |punch |kick |wave | Total
-:---------:|:---------:|:---------:|:---------:|:---------:|:---------:|:---------:|:---------:|:---------:
+:---------:|:---------:|:---------:|:---------:|:---------:|:---------:|:---------:
 Number|  711|  907|  583|  784|  931| 3916
 
 ## Get Skeleton from Image
