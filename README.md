@@ -39,14 +39,14 @@ Check the [installation_action_recognition.md](doc/installation_action_recogniti
 
 ### Training Action Recognition Model
 * Copy your dataset (must be .csv file) into [/data](data/) folder
-* Run the following command:
+* Run [training.py](src/training.py) with the following command:
 ```
 python3 src/training.py --dataset [dataset_filename]
 ```
-* The model is saved in [doc](doc/)
+* The model is saved in [/model](model/) folder
 
 ### Real-time Action Recognition
-* To see our multi-person action recognition result using your webcam, run:
+* To see our multi-person action recognition result using your webcam, run [run_detector.py](src/run_detector.py) with the following command:
 ```
 python3 src/run_detector.py --images_source webcam
 ```
