@@ -4,9 +4,16 @@
 -----------------------------------------------------------------------------------------
 ## Results
 ### Human Pose Estimation Benchmarking
+#### 1. Multi-Person (left: AlphaPose, right: OpenPose)
 <p align = "center">
   <img src = "images/alphapose_multi.gif" height = "240px">
   <img src = "images/openpose_multi.gif" height = "240px">
+</p>
+
+#### 2. Single-Person (left: AlphaPose, right: OpenPose)
+<p align = "center">
+  <img src = "images/alphapose_single.gif" height = "240px">
+  <img src = "images/openpose_single.gif" height = "240px">
 </p>
 
 ### Action Recognition
