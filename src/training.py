@@ -76,4 +76,4 @@ if __name__ == "__main__":
     model.fit(X_train, Y_train, batch_size=32, epochs=50, verbose=2, validation_data=(X_test, Y_test))
 
     # Save the trained model
-    model.save('../model/test.h5')
+    model.save('../model/action_recognition.h5')
