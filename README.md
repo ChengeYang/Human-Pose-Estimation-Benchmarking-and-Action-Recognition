@@ -28,12 +28,12 @@ The output of OpenPose can be found at [OpenPose Demo - Output](https://github.c
 
 The third approach is used, which gives the best result and robustness.
 ### DNN model
-The DNN model is implemented in [training.py]() using Keras and Tensorflow. The model consists of an input layer, an output layer and three hidden layers. The output layer uses softmax to conduct a 5-class classification.
+We built our DNN model refering to [Online-Realtime-Action-Recognition-based-on-OpenPose](https://github.com/LZQthePlane/Online-Realtime-Action-Recognition-based-on-OpenPose). The DNN model is implemented in [training.py]() using Keras and Tensorflow. The model consists of an input layer, an output layer and three hidden layers. The output layer uses softmax to conduct a 5-class classification.
 ### Training
-* Copy your dataset into the same directory as [training.py]()
+* Copy your dataset (must be .csv file) into the same directory as [training.py]()
 * Run the following command:
 ```
-python3 training.py --dataset [dataset file name]
+python3 training.py --dataset [dataset_filename]
 ```
 -----------------------------------------------------------------------------------------
 ## Acknowledgement
