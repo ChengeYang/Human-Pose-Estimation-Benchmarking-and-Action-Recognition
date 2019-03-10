@@ -15,14 +15,12 @@ import simplejson
 import argparse
 
 import mylib.io as myio
-import mylib.funcs as myfunc
-from mylib.feature_proc import ProcFtr 
-from mylib.action_classifier import *
+from mylib.display import drawActionResult
+from mylib.data_preprocessing import pose_normalization
 
 # PATHS ==============================================================
 
 CURR_PATH = os.path.dirname(os.path.abspath(__file__))+"/"
-
 
 # INPUTS ==============================================================
 
@@ -41,6 +39,8 @@ def parse_input_FROM_WEBCAM():
         print("\nWrong command line input !\n")
         assert True
 
+FROM_WEBCAM = parse_input_FROM_WEBCAM()
+
 
 # PATHS and SETTINGS =================================
 
@@ -53,12 +53,8 @@ SAVE_DETECTED_SKELETON_TO =         "skeleton_data/skeletons"+data_idx+"/"
 SAVE_DETECTED_SKELETON_IMAGES_TO =  "skeleton_data/skeletons"+data_idx+"_images/"
 SAVE_IMAGES_INFO_TO =               "skeleton_data/images_info"+data_idx+".txt"
 
-FROM_WEBCAM = parse_input_FROM_WEBCAM()
-
 DO_INFERENCE =  True and FROM_WEBCAM
-DO_INFERENCE_MODEL = ["EECS_433", "EECS_496"][1]
 SAVE_RESULTANT_SKELETON_TO_TXT_AND_IMAGE = not FROM_WEBCAM
-# SAVE_RESULTANT_SKELETON_TO_TXT_AND_IMAGE = False
 
 # create folders ==============================================================
 if not os.path.exists(CURR_PATH+SKELETON_FOLDER):
@@ -226,17 +222,16 @@ class ActionClassifier(object):
     def predict(self, skeleton):
 
         # Preprocess data
-        if 0:
-            skeleton_input = ProcFtr.pos2angles(skeleton).reshape(-1, 8)
-        else:
-            tmp = ProcFtr.pose_normalization(skeleton)
-            skeleton_input = np.array(tmp).reshape(-1, len(tmp))
+        tmp = pose_normalization(skeleton)
+        skeleton_input = np.array(tmp).reshape(-1, len(tmp))
             
         # Predicted label: int & string
         predicted_idx = np.argmax(self.dnn_model.predict(skeleton_input))
         prediced_label = self.action_dict[predicted_idx]
 
         return prediced_label
+
+int2str = lambda num, blank: ("{:0"+str(blank)+"d}").format(num)
 
 
 if __name__ == "__main__":
@@ -254,17 +249,9 @@ if __name__ == "__main__":
 
     # -- Classify action
     if DO_INFERENCE:
-        if DO_INFERENCE_MODEL == "EECS_496":
-            classifier = ActionClassifier(
-                CURR_PATH + "../model/action_recognition.h5"
-            )
-        else:
-            classifier = MyClassifier(
-                CURR_PATH + "trained_classifier.pickle",
-                # action_types = ['jump', 'kick', 'run', 'sit', 'squat', 'stand', 'walk', 'wave'], 
-                action_types = ['kick', 'punch', 'squat', 'stand', 'wave'],
-                
-            )
+        classifier = ActionClassifier(
+            CURR_PATH + "../model/action_recognition.h5"
+        )
 
     # -- Loop through all images
     ith_img = 1
@@ -295,14 +282,14 @@ if __name__ == "__main__":
                     my_detector.draw(image_disp, humans)
                 
                 # Draw bounding box and action type
-                myfunc.drawActionResult(image_disp, skeleton, prediced_label)
+                drawActionResult(image_disp, skeleton, prediced_label)
 
         # Write result to txt/png
         if SAVE_RESULTANT_SKELETON_TO_TXT_AND_IMAGE:
             myio.save_skeletons(SAVE_DETECTED_SKELETON_TO 
-                + myfunc.int2str(ith_img, 5)+".txt", skelsInfo)
+                + int2str(ith_img, 5)+".txt", skelsInfo)
             cv2.imwrite(SAVE_DETECTED_SKELETON_IMAGES_TO 
-                + myfunc.int2str(ith_img, 5)+".png", image_disp)
+                + int2str(ith_img, 5)+".png", image_disp)
 
         if 1: # Display
             cv2.imshow("action_recognition", 
