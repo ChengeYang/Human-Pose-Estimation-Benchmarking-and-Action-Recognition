@@ -2,13 +2,18 @@
 #### Deep Learning Project, Winter 2019, Northwestern University
 #### Group members: Chenge Yang, Zhicheng Yu, Feiyu Chen
 -----------------------------------------------------------------------------------------
+## Demo
+<p align = "center">
+  <img src = "action_recognition.gif" height = "480px">
+</p>
+-----------------------------------------------------------------------------------------
 ## Introduction
 This project contain two main parts:
 ### 1. Human Pose Estimation Benchmarking
 
 ### 2. Online Skeleton-Based Action Recognition
 Single-frame realtime human action recognition based on OpenPose. The pipeline is as follows:
-* Realtime human pose estimation via OpenPose
+* Realtime human pose estimation via tf-pose-estimation
 * Data preprocessing
 * Action recognition with DNN using TensorFlow / Keras
 -----------------------------------------------------------------------------------------
@@ -39,4 +44,5 @@ python3 training.py --dataset [dataset_filename]
 ## Acknowledgement
 * [OpenPose](https://github.com/CMU-Perceptual-Computing-Lab/openpose)
 * [AlphaPose](https://github.com/MVIG-SJTU/AlphaPose)
+* [tf-pose-estimation](https://github.com/ildoonet/tf-pose-estimation)
 * [Online-Realtime-Action-Recognition-based-on-OpenPose](https://github.com/LZQthePlane/Online-Realtime-Action-Recognition-based-on-OpenPose)
