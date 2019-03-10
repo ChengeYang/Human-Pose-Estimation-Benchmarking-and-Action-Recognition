@@ -5,7 +5,8 @@
 ## Results
 ### Human Pose Estimation Benchmarking
 <p align = "center">
-  <img src = "images/action_recognition.gif" height = "480px">
+  <img src = "images/alphapose_multi.gif" height = "240px">
+  <img src = "images/openpose_multi.gif" height = "240px">
 </p>
 
 ### Action Recognition
@@ -20,10 +21,10 @@ This project contain two main parts:
 
 
 ### 2. Online Skeleton-Based Action Recognition
-Real-time human action recognition based on tf-pose-estimation. The pipeline is as follows:
-* Real-time human pose estimation via tf-pose-estimation
+Real-time multi-person human action recognition based on [tf-pose-estimation](https://github.com/ildoonet/tf-pose-estimation). The pipeline is as follows:
+* Real-time multi-person pose estimation via tf-pose-estimation
 * Data preprocessing
-* Action recognition with DNN using TensorFlow / Keras
+* Multi-person action recognition with DNN using TensorFlow / Keras
 
 -----------------------------------------------------------------------------------------
 ## Dependencies and Installation
@@ -62,12 +63,9 @@ The examples and the numbers of training images for each action class are shown 
 |:---:|:---:|:---:|:---:|:---:|
 |![](./images/squat.gif)|  ![](./images/stand.gif)|  ![](./images/punch.gif)|  ![](./images/kick.gif)|  ![](./images/wave.gif)|
 
-<center>
-
 |Class label| squat |stand |punch |kick |wave | Total |
 |:---:|:---:|:---:|:---:|:---:|:---:|:---:|
 |Number of training images|  711|  907|  583|  784|  931| 3916|
-</center>
 
 ### Get Skeleton from Image
 We used [tf-pose-estimation](https://github.com/ildoonet/tf-pose-estimation) to detect the human pose in each training image.
