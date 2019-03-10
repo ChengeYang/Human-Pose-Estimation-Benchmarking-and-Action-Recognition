@@ -50,7 +50,7 @@ pip show protobuf
  2. After you install **CMake GUI**: Assuming your CMake downloaded folder is in {CMAKE_FOLDER_PATH}, everytime these instructions mentions Cmake-gui, you will have to replace that line by {CMAKE_FOLDER_PATH}/bin/cmake-gui.
 
  <p align="center">
-   <img src="doc/shared_file/cmake-python.png" width="360">
+   <img src="doc/shared_file/cmake-python.png" width="500">
  </p>
 
  3. At OpenPose Configuration step, make sure the `BUILD_PYTHON` flag is set in Cmake-gui if you want to install Python API. However, it sometimes may not work. Go into your /build/python directory and try
@@ -76,7 +76,7 @@ Information about output (format, keypoint index ordering, etc.) is on [this pag
 
 
 <p align="center">
-  <img src="doc/shared_file/figure_0.png" width="360">
+  <img src="doc/shared_file/multi-person.png" width="450">
 </p>
 <p align="center">
   <b>Benchmark on a 1920x1080 video with 902 frames, 30fps</b><br>
@@ -129,7 +129,7 @@ Low accuracy version:
 ### Single-person:
 
 <p align="center">
-  <img src="doc/shared_file/figure_1.png" width="360">
+  <img src="doc/shared_file/single-person.png" width="450">
 </p>
 <p align="center">
   <b>Benchmark on a 1920x1080 video with 902 frames, 30fps</b><br>
