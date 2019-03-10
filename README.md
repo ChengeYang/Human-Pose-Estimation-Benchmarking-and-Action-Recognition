@@ -52,20 +52,22 @@ python3 src/run_detector.py --images_source webcam
 ```
 
 -----------------------------------------------------------------------------------------
-## Implementation of Action Recognition
+## Implementation (Action Recognition)
 ### Collecting training data
 we collected 3916 training images from our laptop's webcam for training the model and classifying five actions: squat, stand, punch, kick, and wave. In each training image, there is only one person doing one of these 5 actions. The videos are recorded at 10 fps with a frame size of 640 x 480, and then saved to images.
 
-The examples and numbers of training image for each action class are shown in the below:  
+The examples and the numbers of training images for each action class are shown below:  
 
 |squat |stand |punch |kick |wave |
 |:---:|:---:|:---:|:---:|:---:|
 |![](./images/squat.gif)|  ![](./images/stand.gif)|  ![](./images/punch.gif)|  ![](./images/kick.gif)|  ![](./images/wave.gif)|
 
-|class | squat |stand |punch |kick |wave | Total |
-|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
-|Number of training image|  711|  907|  583|  784|  931| 3916|
+<center>
 
+|Class label| squat |stand |punch |kick |wave | Total |
+|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
+|Number of training images|  711|  907|  583|  784|  931| 3916|
+</center>
 ### Get Skeleton from Image
 We used [tf-pose-estimation](https://github.com/ildoonet/tf-pose-estimation) to detect the human pose in each training image.
 
