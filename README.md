@@ -106,7 +106,7 @@ We used [tf-pose-estimation](https://github.com/ildoonet/tf-pose-estimation) to 
 
 The generated training data files are located in [data](data/) folder:
 * [skeleton_raw.csv](data/skeleton_raw.csv): original data
-* [skeleton_filtered.csv](data/skeleton_filtered.csv): cleaned data where incomplete poses are eliminated
+* [skeleton_filtered.csv](data/skeleton_filtered.csv): filtered data where incomplete poses are eliminated
 
 ### Feature Extraction
 To transfer the original skeleton data into the input of our neural network, three features are extracted, which are implemented in [data_preprocessing.py](src/mylib/data_preprocessing.py) :
