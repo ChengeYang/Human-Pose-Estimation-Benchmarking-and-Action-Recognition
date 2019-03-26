@@ -25,13 +25,13 @@
 ## Introduction
 This project contain two main parts:
 ### 1. Human Pose Estimation Benchmarking
-In this part, we conducted benchmarking test on the two most state-of-the-art human pose estimation models [OpenPose](https://github.com/CMU-Perceptual-Computing-Lab/openpose) and [AlphaPose](https://github.com/MVIG-SJTU/AlphaPose). We tested different modes on both single-person and multi-person videos.
+In this part, we conducted benchmarking test on the two most state-of-the-art human pose estimation models [OpenPose](https://github.com/CMU-Perceptual-Computing-Lab/openpose) and [AlphaPose](https://github.com/MVIG-SJTU/AlphaPose). We tested different modes on both single-person and multi-person scenarios.
 
 ### 2. Online Skeleton-Based Action Recognition
 Real-time multi-person human action recognition based on [tf-pose-estimation](https://github.com/ildoonet/tf-pose-estimation). The pipeline is as follows:
 * Real-time multi-person pose estimation via tf-pose-estimation
-* Data preprocessing
-* Multi-person action recognition with DNN using TensorFlow / Keras
+* Feature Extraction
+* Multi-person action recognition using TensorFlow / Keras
 
 -----------------------------------------------------------------------------------------
 ## Dependencies and Installation
@@ -108,16 +108,16 @@ The generated training data files are located in [data](data/) folder:
 * [skeleton_raw.csv](data/skeleton_raw.csv): original data
 * [skeleton_filtered.csv](data/skeleton_filtered.csv): cleaned data where incomplete poses are eliminated
 
-### Data preprocessing
-To transfer the original skeleton data into the input of our neural network, three preprocessing methods are used, which are implemented in [data_preprocessing.py](src/mylib/data_preprocessing.py) :
+### Feature Extraction
+To transfer the original skeleton data into the input of our neural network, three features are extracted, which are implemented in [data_preprocessing.py](src/mylib/data_preprocessing.py) :
 1. Head reference: all joint positions are converted to the x-y coordinates relative to the head joint.
 2. Pose to angle: the 18 joint positions are converted to 8 joint angles: left / right shoulder, left / right elbow, left / right hip, left / right knee.
 3. Normalization: all joint positions are converted to the x-y coordinates relative to the skeleton bounding box.
 
-The third approach is used, which gives the best result and robustness.
+The third feature is used, which gives the best result and robustness.
 
-### DNN model
-We built our DNN model refering to [Online-Realtime-Action-Recognition-based-on-OpenPose](https://github.com/LZQthePlane/Online-Realtime-Action-Recognition-based-on-OpenPose). The DNN model is implemented in [training.py](src/training.py) using Keras and Tensorflow. The model consists of an input layer, an output layer and three hidden layers. The output layer uses softmax to conduct a 5-class classification.
+### Deep Learning model
+We built our Deep Learning model refering to [Online-Realtime-Action-Recognition-based-on-OpenPose](https://github.com/LZQthePlane/Online-Realtime-Action-Recognition-based-on-OpenPose). The model is implemented in [training.py](src/training.py) using Keras and Tensorflow. The model consists of three hidden layers and a Softmax output layer to conduct a 5-class classification.
 
 The generated model is saved in [model](model/) folder.
 
